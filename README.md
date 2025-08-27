@@ -29,7 +29,7 @@ This repository is a learning/student project and uses **SQLite** as the default
 
 **Worker / Admin**
 - Worker dashboard to view/manage bookings and toggle availability.
-- worker login <workername>@gmail.com eg.:- john@gmail.com
+- worker login (workername)@gmail.com eg.:- john@gmail.com
 - Custom admin-dashboard at `/admin-dashboard/` to add / edit / delete workers and view bookings.
 - Default Django admin available at `/admin/`.
 
