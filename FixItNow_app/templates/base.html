@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixItNow</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        /* Navbar link hover effect */
+        .navbar-nav .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background-color: #0d6efd;
+            transition: width 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #0d6efd;
+        }
+
+        .navbar-nav .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #f8f9fa;
+            padding: 60px 0 30px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        footer .footer-logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #0d6efd;
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        footer .footer-logo img {
+            margin-right: 10px;
+        }
+
+        footer p {
+            color: #6c757d;
+            line-height: 1.6;
+        }
+
+        footer .footer-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #000;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        footer ul li {
+            margin-bottom: 8px;
+            color: #6c757d;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        footer ul li:hover {
+            color: #0d6efd;
+        }
+
+        footer .social-icons a {
+            display: inline-block;
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: #6c757d;
+            transition: color 0.3s ease;
+        }
+
+        footer .social-icons a:hover {
+            color: #0d6efd;
+        }
+
+        footer hr {
+            border-top: 1px solid #dee2e6;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        footer .copyright {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        /* Modal card styling */
+        .form-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Title */
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Input fields */
+        .form-control {
+            border: 1px solid #dadada;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 0.95rem;
+            color: #5e5e5e;
+        }
+
+        .form-control:focus {
+            border-color: var(--bs-primary);
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, .25);
+        }
+
+        /* Button */
+        .btn-primary-custom {
+            background-color: var(--bs-primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            padding: 10px;
+            width: 100%;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .btn-primary-custom:hover {
+            transform: scale(1.03);
+            background-color: var(--bs-primary);
+        }
+
+        /* Login link */
+        .login-link {
+            color: var(--bs-primary);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .login-link:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3 shadow-sm">
+        <div class="container">
+            <!-- Logo Left -->
+            <a class="navbar-brand fw-bold text-primary" href="#">
+                <img src="https://img.icons8.com/?size=100&id=11683&format=png&color=000000" alt="Logo" width="30"
+                    height="30" class="d-inline-block align-text-top me-2">
+                FixItNow
+            </a>
+
+            <!-- Toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Center Menu -->
+            <div class="collapse navbar-collapse justify-content-center" id="mainNavbar">
+                <ul class="navbar-nav fw-semibold">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'worker_list' %}">All Workers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+                    <!-- <li class="nav-item">
+                        <a class="btn btn-outline-primary rounded-pill px-4 ms-lg-2" href="#">Admin Panel</a>
+                    </li> -->
+                </ul>
+            </div>
+
+            <!-- Create Account Right -->
+
+
+
+            {% if user.is_authenticated %}
+            {% if user.userprofile.role == 'worker' %}
+            <!-- Worker Navbar -->
+            <div class="dropdown">
+                <a class="btn btn-light dropdown-toggle" href="#" role="button" id="workerDropdown"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle"></i> {{ user.first_name }} (Worker)
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="workerDropdown">
+                    <li><a class="dropdown-item text-dark " href="{% url 'worker_dashboard' %}">Dashboard</a></li>
+                    <li><a class="dropdown-item text-dark" href="{% url 'my_bookings' %}">My Bookings</a></li>
+                    <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </div>
+
+            {% elif user.userprofile.role == 'admin' %}
+            <!-- Admin Navbar -->
+            <div class="dropdown">
+                <a class="btn btn-light dropdown-toggle" href="#" role="button" id="adminDropdown"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle"></i> {{ user.first_name }} (Admin)
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end " aria-labelledby="adminDropdown">
+                    <li><a class="dropdown-item text-dark" href="{% url 'admin_dashboard' %}">Dashboard</a></li>
+                    <li><a class="dropdown-item text-dark" href="{% url 'my_bookings' %}">My Bookings</a></li>
+                    <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </div>
+
+            {% else %}
+            <!-- Regular User Navbar -->
+            <div class="dropdown">
+                <a class="btn btn-light dropdown-toggle" href="#" role="button" id="profileDropdown"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle"></i> {{ user.first_name }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end bg-primary" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item text-dark" href="{% url 'my_bookings' %}">My Bookings</a></li>
+                    <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </div>
+            {% endif %}
+            {% else %}
+            <button class="btn btn-primary rounded-pill px-4 ms-lg-3" data-bs-toggle="modal"
+                data-bs-target="#createAccountModal">
+                Create Account
+            </button>
+            {% endif %}
+
+
+
+            <!-- Create Account Modal -->
+            <div class="modal fade" id="createAccountModal" name="createAccountModal" tabindex="-1"
+                aria-labelledby="createAccountModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0">
+                        <div class="modal-body p-0">
+                            <form class="form-card w-100" method="POST" action="{% url 'signup' %}">
+                                {% csrf_token %}
+                                <p class="form-title">Create Account</p>
+                                <p class="text-muted mb-4">Please sign up to book appointment</p>
+
+                                <!-- Full Name -->
+                                <div class="mb-3">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" name="fullname" class="form-control" required>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" name="email" class="form-control" required>
+                                </div>
+
+                                <!-- Password -->
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" name="password" class="form-control" required>
+                                </div>
+
+                                <!-- Button -->
+                                <button type="submit" class="btn-primary-custom">Create account</button>
+
+                                <!-- Login link -->
+                                <p class="mt-3 mb-0">
+                                    Already have an account?
+                                    <a class="login-link text-primary fw-semibold text-decoration-none switch-to-login"
+                                        role="button">
+                                        Login here
+                                    </a>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login Modal -->
+            <div class="modal fade" id="loginAccountModal" name="loginAccountModal" tabindex="-1"
+                aria-labelledby="loginAccountModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0">
+                        <div class="modal-body p-0">
+                            <form class="form-card w-100" method="POST" action="{% url 'login' %}">
+                                {% csrf_token %}
+                                <p class="form-title">Login</p>
+                                <p class="text-muted mb-4">Please login to continue</p>
+
+                                <!-- Email -->
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" name="username" class="form-control" required>
+                                </div>
+
+                                <!-- Password -->
+                                <div class="mb-3">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" name="password" class="form-control" required>
+                                </div>
+
+                                <!-- Button -->
+                                <button type="submit" class="btn-primary-custom">Login</button>
+
+                                <!-- Signup link -->
+                                <p class="mt-3 mb-0">
+                                    Don't have an account?
+                                    <a class="login-link text-primary fw-semibold text-decoration-none switch-to-signup"
+                                        role="button">
+                                        Sign up here
+                                    </a>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {% if messages %}
+            <div class="position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+
+            <!-- Modal Switch Script -->
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const loginModal = new bootstrap.Modal(document.getElementById('loginAccountModal'));
+                    const signupModal = new bootstrap.Modal(document.getElementById('createAccountModal'));
+
+                    document.querySelectorAll('.switch-to-login').forEach(el => {
+                        el.addEventListener('click', function () {
+                            signupModal.hide();
+                            setTimeout(() => loginModal.show(), 300); // Delay so transition looks smooth
+                        });
+                    });
+
+                    document.querySelectorAll('.switch-to-signup').forEach(el => {
+                        el.addEventListener('click', function () {
+                            loginModal.hide();
+                            setTimeout(() => signupModal.show(), 300);
+                        });
+                    });
+                });
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    const alerts = document.querySelectorAll('.alert');
+                    if (alerts.length) {
+                        setTimeout(() => {
+                            alerts.forEach(alert => {
+                                const bsAlert = new bootstrap.Alert(alert);
+                                bsAlert.close();
+                            });
+                        }, 3000); // Hide after 3 seconds
+                    }
+                });
+
+            </script>
+
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row gy-4">
+                <!-- Logo & Description -->
+                <div class="col-lg-5 col-md-12">
+                    <div class="footer-logo">
+                        <img src="https://img.icons8.com/?size=100&id=11683&format=png&color=000000" width="30"
+                            height="30" alt="Logo">
+                        FixItNow
+                    </div>
+                    <p>
+                        Your trusted platform for finding skilled workers quickly and easily.
+                        We connect you with the right people for every job.
+                    </p>
+                    <div class="social-icons">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <!-- Company Links -->
+                <div class="col-lg-3 col-md-6">
+                    <p class="footer-title">COMPANY</p>
+                    <ul>
+                        <li><a style="text-decoration: none;" href="{% url 'home' %}">Home</a></li>
+                        <li><a style="text-decoration: none;" href="{% url 'worker_list' %}">All Workers</a></li>
+                        <li><a style="text-decoration: none;" href="{% url 'about' %}">About</a></li>
+                        <li><a style="text-decoration: none;" href="{% url 'contact' %}">Contact Us </a></li>
+                    </ul>
+                </div>
+
+                <!-- Get in Touch -->
+                <div class="col-lg-4 col-md-6">
+                    <p class="footer-title">GET IN TOUCH</p>
+                    <ul>
+                        <li>📞 +0-000-000-000</li>
+                        <li>📧 support@fixitnow.com</li>
+                        <li>📍 123, Main Street, City</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr>
+            <p class="copyright">
+                &copy; 2024 FixItNow - All Rights Reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</body>
+
+</html>

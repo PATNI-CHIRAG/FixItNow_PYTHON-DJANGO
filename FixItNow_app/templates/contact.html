@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+  .contact-img {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    border-radius: 15px;
+    object-fit: cover;
+  }
+  .contact-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+  }
+  .contact-section {
+    padding: 80px 0;
+    background-color: #f9f9f9;
+  }
+</style>
+
+<!-- Contact Section -->
+<section class="contact-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      
+      <!-- Left Image -->
+      <div class="col-lg-5">
+        <div class="position-relative">
+          <img src="{% static 'images/contact.jpg' %}" 
+               alt="Contact Us" 
+               class="img-fluid shadow-lg contact-img"
+               style="height: 350px; width: 100%; max-width: 500px;">
+        </div>
+      </div>
+
+      <!-- Right Text -->
+      <div class="col-lg-7">
+        <h2 class="fw-bold mb-4 text-primary">
+          CONTACT <span class="text-dark">US</span>
+        </h2>
+        <p class="text-muted mb-4">
+          We’d love to hear from you! Whether you have a question, feedback,  
+          or a business inquiry — we’re just a message away.
+        </p>
+
+        <div class="mb-4">
+          <h6 class="fw-bold text-primary mb-2">OUR OFFICE</h6>
+          <p class="mb-1">00000 Willms Station <br> Suite 000, Washington, USA</p>
+          <p class="mb-1">Tel: (000) 000-0000</p>
+          <p>Email: greatstackdev@gmail.com</p>
+        </div>
+
+        <div class="mb-4">
+          <h6 class="fw-bold text-primary mb-2">CAREERS AT PRESCRIPTO</h6>
+          <p>Learn more about our teams and job openings.</p>
+        </div>
+
+        <button class="btn btn-dark px-4 py-2">Explore Jobs</button>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

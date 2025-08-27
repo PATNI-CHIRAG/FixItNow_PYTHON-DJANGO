@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="mb-0">Bookings for {{ worker.user.get_full_name }}</h3>
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary px-4 py-2">Back</a>
+    </div>
+
+
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Address</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ booking.user.get_full_name }}</td>
+                <td>{{ booking.booking_date }}</td>
+                <td>{{ booking.booking_time }}</td>
+                <td>{{ booking.address }}</td>
+                {% if booking.status == 'pending' %}
+                <td><span class="badge bg-info">{{ booking.status }}</span></td>
+                {% elif booking.status == 'accepted' %}
+                <td><span class="badge bg-success">{{ booking.status }}</span></td>
+                {% else %}
+                <td><span class="badge bg-danger">{{ booking.status }}</span></td>
+                {% endif %}
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No bookings found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

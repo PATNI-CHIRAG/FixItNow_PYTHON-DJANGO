@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+    <h3 class="mb-4">Booking Requests</h3>
+
+    <div class="mb-4 d-flex align-items-center justify-content-between">
+        <h4>My Availability:
+            <span id="availabilityBadge" class="badge 
+            {% if user.worker.is_available %}
+                bg-success
+            {% else %}
+                bg-danger
+            {% endif %}">
+                {% if user.worker.is_available %}
+                Available
+                {% else %}
+                Unavailable
+                {% endif %}
+            </span>
+        </h4>
+
+        <button id="toggleAvailabilityBtn" class="btn btn-outline-primary">
+            {% if user.worker.is_available %}
+            Set Unavailable
+            {% else %}
+            Set Available
+            {% endif %}
+        </button>
+    </div>
+
+
+
+
+    {% if bookings %}
+    <div class="list-group">
+        {% for booking in bookings %}
+        <div class="list-group-item border mb-2 rounded d-flex justify-content-between align-items-center">
+            <div>
+                <p class="mb-1"><strong>Request By:</strong> {{ booking.user.get_full_name }}</p>
+                <p class="mb-1"><strong>Date & Time:</strong> {{ booking.booking_date|date:"d M Y" }} | {{ booking.booking_time|time:"H:i A" }}</p>
+                <p class="mb-1"><strong>Address:</strong> {{ booking.address|default:"N/A" }}</p>
+                <p class="mb-1"><strong>Message:</strong> {{ booking.message|default:"N/A" }}</p>
+                <p class="mb-1"><strong>Request:</strong>
+                    {% if booking.status == 'pending' %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+                    {% elif booking.status == 'accepted' %}
+                    <span class="badge bg-success">Accepted</span>
+                    {% else %}
+                    <span class="badge bg-danger">Rejected</span>
+                    {% endif %}
+                </p>
+            </div>
+            {% if booking.status == 'pending' %}
+            <div class="d-flex flex-column gap-2">
+                <a href="{% url 'worker_booking_action' booking.id 'accept' %}"
+                    class="btn btn-success btn-sm">Accept</a>
+                <a href="{% url 'worker_booking_action' booking.id 'reject' %}" class="btn btn-danger btn-sm">Reject</a>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-muted">No booking requests yet.</p>
+    {% endif %}
+</div>
+
+<script>
+    document.getElementById('toggleAvailabilityBtn').addEventListener('click', function () {
+        fetch("{% url 'toggle_availability' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+
+                // Update badge
+                const badge = document.getElementById('availabilityBadge');
+                badge.textContent = data.status_text;
+                badge.className = 'badge ' + data.badge_class;
+
+                // Update button text
+                const btn = document.getElementById('toggleAvailabilityBtn');
+                btn.textContent = data.button_text;
+            })
+            .catch(err => console.log(err));
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Hover effect like Tailwind's translate-y */
+    .worker-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .worker-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    .worker-link {
+        color: #495057;
+        background-color: #ffffff;
+        transition: all 0.3s ease;
+    }
+
+    .worker-link:hover {
+        background-color: #e9f5ff;
+        color: #0d6efd;
+        border-color: #b6d4fe;
+    }
+
+    .worker-link.active {
+        background-color: #0d6efd;
+        color: white;
+        font-weight: 500;
+        border-color: #0a58ca;
+    }
+
+    /* Worker image fix */
+    .worker-img {
+        height: 320px;             /* taller image area */
+        width: 100%;
+        object-fit: cover;         /* crop edges slightly */
+        object-position: center;   /* center face (top + bottom balanced) */
+        border-top-left-radius: .5rem;
+        border-top-right-radius: .5rem;
+    }
+
+    /* Optional: if you want no cropping at all, switch to this:
+    .worker-img {
+        height: 320px;
+        width: 100%;
+        object-fit: contain; 
+        background: #f8f9fa; 
+    } */
+</style>
+
+<div class="container my-4">
+    <p class="text-muted">Browse through the workers specialist.</p>
+
+    <div class="d-flex flex-column flex-sm-row align-items-start gap-3 mt-3">
+        <!-- Filters button (mobile only) -->
+        <button class="btn btn-outline-secondary btn-sm d-sm-none">Filters</button>
+
+        <!-- Worker type filters -->
+        <div class="d-none d-sm-flex flex-column gap-2 small">
+            {% for wtype in worker_types %}
+            <a href="{% url 'worker_list' wtype %}"
+               class="border rounded py-2 px-3 text-decoration-none worker-link {% if selected_type == wtype %}active{% endif %}">
+                {{ wtype }}
+            </a>
+            {% endfor %}
+        </div>
+
+        <!-- Worker cards -->
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 w-100">
+            {% for worker in workers %}
+            <a href="{% url 'single_worker' worker.id %}" style="text-decoration:none">
+                <div class="col">
+                    <div class="card h-100 border border-primary-subtle rounded-3 shadow-sm worker-card">
+                        {% if worker.image %}
+                        <img src="{{ worker.image }}" class="card-img-top worker-img bg-light"
+                             alt="{{ worker.user.get_full_name }}">
+                        {% else %}
+                        <img src="{% static 'images/loginImage.jpg' %}" class="card-img-top worker-img bg-light" alt="No image">
+                        {% endif %}
+
+                        <div class="card-body">
+                            <div class="d-flex align-items-center gap-2 text-success small mb-2">
+                                {% if worker.is_available %}
+                                <span class="rounded-circle bg-success" style="width:8px; height:8px;"></span>
+                                <span>Available</span>
+                                {% else %}
+                                <span class="rounded-circle bg-danger" style="width:8px; height:8px;"></span>
+                                <span class="text-danger">Unavailable</span>
+                                {% endif %}
+                            </div>
+                            <h5 class="card-title mb-1">{{ worker.user.get_full_name }}</h5>
+                            <p class="text-muted small mb-1">{{ worker.worker_type }}</p>
+                            <p class="fw-bold mb-0">${{ worker.price_per_day }} / day</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% empty %}
+            <p class="text-muted">No workers found for this category.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

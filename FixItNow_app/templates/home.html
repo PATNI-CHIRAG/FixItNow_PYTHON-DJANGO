@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    /* Worker Card (Round Categories) */
+    .worker-card {
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        border: none;
+        text-align: center;
+        padding: 25px 15px;
+        background: white;
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+    }
+    .worker-card:hover {
+        transform: translateY(-8px) scale(1.08);
+        box-shadow: 0 10px 25px rgba(0, 123, 255, 0.25);
+        background-color: #f0f8ff;
+    }
+    .worker-card img {
+        max-width: 60px;
+        margin-bottom: 8px;
+        transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    .worker-card:hover img {
+        transform: scale(1.15);
+        filter: brightness(1.1);
+    }
+    .worker-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    /* Worker Listing Cards (Top Workers) */
+    .worker-card-1 {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    .worker-card-1:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+    .worker-card-1 img {
+        height: 260px;              /* a bit taller for face visibility */
+        width: 100%;
+        object-fit: cover;          /* crop nicely */
+        object-position: center top; /* keep faces in frame */
+        transition: transform 0.4s ease;
+    }
+    .worker-card-1:hover img {
+        transform: scale(1.08);     /* hover zoom */
+    }
+
+    /* Hero Section */
+    .hero {
+        background: linear-gradient(135deg, #79aaf9, #9edaf7);
+        color: #212529;
+    }
+
+    /* Appointment Section */
+    .appointment-card {
+        border-radius: 20px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
+    .appointment-title {
+        font-weight: 600;
+        color: #fff;
+    }
+
+    /* Button */
+    .btn-custom {
+        color: white;
+        border-radius: 50px;
+        padding: 10px 28px;
+        font-size: 1rem;
+        transition: transform 0.3s ease;
+        border: none;
+    }
+    .btn-custom:hover {
+        transform: scale(1.05);
+    }
+
+    body {
+        background: #f8f9fa;
+    }
+    .section-padding {
+        padding-top: 70px;
+        padding-bottom: 70px;
+    }
+</style>
+
+<!-- Hero section  -->
+<section class="py-5">
+    <div class="hero container rounded-4 p-4 p-md-5 shadow-lg">
+        <div class="row align-items-center g-5">
+
+            <!-- Left Content -->
+            <div class="col-md-6 text-center text-md-start">
+                <h1 class="display-5 fw-bold mb-3">
+                    Book Appointment <br> With Trusted Workers
+                </h1>
+                <div class="d-flex flex-column flex-md-row align-items-center gap-3 my-4 small text-dark">
+                    <img src="https://prescripto.vercel.app/assets/group_profiles-BCL6AVF5.png"
+                         alt="Worker Group"
+                         class="img-fluid rounded" style="max-width:120px;">
+                    <p class="mb-0">
+                        Browse our network of skilled and trusted workers,<br class="d-none d-sm-block">
+                        and schedule your job with ease.
+                    </p>
+                </div>
+                <a href="{% url 'worker_list' %}" class="btn btn-dark btn-lg rounded-pill px-4 shadow-sm">
+                    Book Worker <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+            </div>
+
+            <!-- Right Image -->
+            <div class="col-md-6 text-center">
+                <img src="{% static 'images/worker1.jpg' %}" 
+                     alt="Worker at job" 
+                     class="img-fluid rounded-4 shadow-lg"
+                     style="max-height:350px; object-fit:cover;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search by Worker Type -->
+<div class="section-padding">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="fw-bold text-primary">Find by Worker Type</h1>
+            <p class="text-muted">Browse through our list of skilled workers and book your service instantly.</p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <!-- Worker Categories -->
+            <div class="col-6 col-md-4 col-lg-2">
+                <a href="{% url 'worker_list' 'Plumber' %}" class="text-decoration-none">
+                    <div class="worker-card">
+                        <img src="https://th.bing.com/th/id/OIP.j1RUXunpuAA5BS3hfw0fXQHaHa?w=195&h=195&c=7&r=0&o=7&pid=1.7" alt="Plumber">
+                        <div class="worker-title">Plumber</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <a href="{% url 'worker_list' 'Electrician' %}" class="text-decoration-none">
+                    <div class="worker-card">
+                        <img src="https://th.bing.com/th/id/OIP.nWzGboysBQIcNTthT0JiRgHaHa?w=215&h=214&c=7&r=0&o=7&pid=1.7" alt="Electrician">
+                        <div class="worker-title">Electrician</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <a href="{% url 'worker_list' 'Carpenter' %}" class="text-decoration-none">
+                    <div class="worker-card">
+                        <img src="https://th.bing.com/th/id/OIP.rRuH-D9CP5NmXcmm9FeCaQHaIf?w=161&h=185&c=7&r=0&o=7&pid=1.7" alt="Carpenter">
+                        <div class="worker-title">Carpenter</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <a href="{% url 'worker_list' 'AC Technician' %}" class="text-decoration-none">
+                    <div class="worker-card">
+                        <img src="https://th.bing.com/th/id/OIP.eLbeJ8ijfbnywdoBlGjMGgHaHa?w=198&h=198&c=7&r=0&o=7&pid=1.7" alt="AC Technician">
+                        <div class="worker-title">AC Technician</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <a href="{% url 'worker_list' 'Painter' %}" class="text-decoration-none">
+                    <div class="worker-card">
+                        <img src="https://th.bing.com/th/id/OIP.4ti5Std32qnDn8SxGoPu6QAAAA?w=138&h=150&c=7&r=0&o=7&pid=1.7" alt="Painter">
+                        <div class="worker-title">Painter</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2">
+                <a href="{% url 'worker_list' 'Cleaner' %}" class="text-decoration-none">
+                    <div class="worker-card">
+                        <img src="https://th.bing.com/th/id/OIP.LEwvGytpl0aP14JlfzBXhAHaHa?w=180&h=196&c=7&r=0&o=5&pid=1.7" alt="Cleaner">
+                        <div class="worker-title">Cleaner</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Top Workers -->
+<div class="container my-5 text-center">
+    <h1 class="mb-3 text-primary">Top Workers to Book</h1>
+    <p class="text-muted mb-5">Simply browse through our extensive list of trusted workers.</p>
+
+    <div class="row g-4">
+        {% for worker in workers|slice:":8" %}
+        <div class="col-12 col-sm-6 col-lg-3">
+            <a href="{% url 'single_worker' worker.id %}" 
+               class="card text-decoration-none text-dark shadow-sm border-0 worker-card-1">
+                {% if worker.image %}
+                <img src="{{ worker.image }}" class="card-img-top" alt="{{ worker.user.get_full_name }}">
+                {% else %}
+                <img src="{% static 'images/loginImage.jpg' %}" class="card-img-top" alt="No image">
+                {% endif %}
+                <div class="card-body">
+                    <div class="d-flex justify-content-center mb-2">
+                        <span class="badge {% if worker.is_available %}bg-success{% else %}bg-danger{% endif %}">
+                            {% if worker.is_available %}Available{% else %}Unavailable{% endif %}
+                        </span>
+                    </div>
+                    <h5 class="card-title mb-1">{{ worker.user.get_full_name }}</h5>
+                    <p class="text-muted mb-1">{{ worker.worker_type }}</p>
+                    <p class="fw-bold mb-0">${{ worker.price_per_day }} / day</p>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+        <p class="text-muted">No workers found for this category.</p>
+        {% endfor %}
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'worker_list' %}" class="btn btn-outline-primary px-4">More</a>
+    </div>
+</div>
+
+<!-- Appointment/Login Section -->
+<div class="container my-5 section-padding">
+    <div class="appointment-card bg-primary p-5">
+        <div class="row align-items-center g-5">
+
+            <!-- Left Content -->
+            <div class="col-md-6">
+                <h2 class="appointment-title display-6">Book Appointment</h2>
+                <h2 class="appointment-title mt-3">With 100+ Trusted Workers</h2>
+                <button class="btn btn-light rounded-pill px-4 mt-4" data-bs-toggle="modal"
+                        data-bs-target="#createAccountModal">
+                    Create Account
+                </button>
+            </div>
+
+            <!-- Right Image -->
+            <div class="col-md-6 text-center">
+                <img src="{% static 'images/loginImage.jpg' %}" 
+                     alt="Appointment" 
+                     class="img-fluid rounded-4 shadow-lg"
+                     style="max-width:300px; height:auto;">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
