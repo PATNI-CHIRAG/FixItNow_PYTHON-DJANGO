@@ -104,7 +104,7 @@ python manage.py migrate
 4. Create a superuser (for Django admin):
 ```bash
 python manage.py createsuperuser
-# username must include @ for login admin dashboard, eg. admin@gmail.com
+# Default Django admin available at `/admin/`.
 ```
 
 6. Start development server:
