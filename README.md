@@ -29,6 +29,7 @@ This repository is a learning/student project and uses **SQLite** as the default
 
 **Worker / Admin**
 - Worker dashboard to view/manage bookings and toggle availability.
+- worker login <workername>@gmail.com eg.:- john@gmail.com
 - Custom admin-dashboard at `/admin-dashboard/` to add / edit / delete workers and view bookings.
 - Default Django admin available at `/admin/`.
 
@@ -80,8 +81,8 @@ FixItNow_Project/
 
 1. Clone the repo (if not already on your machine):
 ```bash
-git clone https://github.com/<your-username>/<repo>.git
-cd <repo-folder>   # the folder that contains manage.py
+git clone https://github.com/PATNI-CHIRAG/FixItNow_PYTHON.git
+cd fixitnow_project   # the folder that contains manage.py
 ```
 
 2. Install dependencies:
