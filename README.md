@@ -6,6 +6,10 @@ This README explains how to clone, set up, and run the project locally so anyone
 > Last updated: 2025-08-27
 
 ---
+[🎥 Watch Demo]
+
+https://github.com/user-attachments/assets/ed2b7acd-3c5f-4852-bc21-fd6bacaa863f
+---
 
 ## 🧾 Project overview
 
