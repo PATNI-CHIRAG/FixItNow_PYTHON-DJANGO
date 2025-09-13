@@ -82,7 +82,7 @@ FixItNow_Project/
 
 1. Clone the repo (if not already on your machine):
 ```bash
-git clone https://github.com/PATNI-CHIRAG/FixItNow_PYTHON.git
+git clone https://github.com/PATNI-CHIRAG/FixItNow_PYTHON-DJANGO.git
 cd fixitnow_python   # the folder that contains manage.py
 ```
 
